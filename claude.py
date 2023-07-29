@@ -17,8 +17,6 @@ from langchain.prompts.chat import (
 
 load_dotenv()
 
-data = request.get_json()
-
 
 llm = ChatAnthropic()
 search = GoogleSerperAPIWrapper()
