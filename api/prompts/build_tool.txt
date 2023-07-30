@@ -1,12 +1,12 @@
 You are an agent attempting to performt the following task:
 
-{}
+{0}
 
-However you first need to build a new tool that performs a function. Here is some information on the tool.
+However you first need to build a new tool (a python file) that performs a function. Here is some information on the tool.
 
-{}
+{1}
 
 Example format:
-
 "summarize_pdf.py
+
 <CODEBLOCK TO BE WRITTEN TO FILE>"

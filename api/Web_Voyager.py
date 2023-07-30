@@ -42,26 +42,47 @@ class Web_Voyager:
         self.iteration = iteration
         self.tool_build_attempts = tool_build_attempts
         self.done = done
+        self.stop_flag = False
+
+    def should_stop(self):
+        return self.stop_flag
+
+    def stop(self):
+        self.stop_flag = True
 
     def increment_iter(self):
         self.iteration += 1
 
     def step(self):
+        if self.should_stop():
+            # Logic to clean up or finalize any tasks before stopping
+            return
+
         if self.iteration > self.max_iterations:
             raise ValueError("Agent has exceeded maximum iterations tool building")
         task = self.task_manager.get_task(self)
         for i in range(self.tool_build_attempts):
-            print('skills', self.tools)
             shouldnt_build = self.tool_manager.should_build(self, task)
-            print('should_build', shouldnt_build)
             if shouldnt_build["result"] == 'success':
                 #get llm to pick the best tool to use for the task
 
-                #execute the task
-                result = self.env.execute_action(shouldnt_build['tool'])
-                
-            elif shouldnt_build["result"] == 'failure':
+                #llm returns the name of the tool 
+
+                #get the file name of the tool
+
+                #execute the tool using the env
+                # result = self.env.execute_action()
                 return 
+            elif shouldnt_build["result"] == 'failure':
+                tool_file = self.tool_manager.build_tool(self, task, shouldnt_build['explanation'])
+                tool_eval = self.critic.evaluate_tool(self, tool_file)
+
+                # if the critic says the tool is good, then we can test it 
+                # if we execute the tool and it works, then we can break out of the loop
+                # if we execute the tool and it doesn't work, then we can try to build another tool
+
+                # if the critic says the tool is bad, then we can try to build another tool
+
             else:
                 raise ValueError("should_build result not recognized")
             #     tool_file = self.tool_manager.build_tool(self, task, should_build)
