@@ -74,21 +74,11 @@ tool_list = [
     # ReadPDFTool
 ]
 
-
-def query_claude(request) -> str:
-    llm = ChatAnthropic(model="claude-2", max_tokens_to_sample=2000)
-    tools = [
-        Tool(
-            name="Intermediate Answer",
-            func=search.run,
-            description="useful for when you need to ask with search",
-        )
-    ]
-    agent_instructions = """You are a helpful assistant. Help the user answer any questions.
+agent_instructions = """You are a helpful assistant. Help the user answer any questions.
 
     You have access to the following tools:
 
-    {tools}
+    {tool_list}
 
     In order to use a tool, you can use <tool></tool> and <tool_input></tool_input> tags. \
     You will then get back a response in the form <observation></observation>
@@ -104,8 +94,11 @@ def query_claude(request) -> str:
     Begin!
 
     Question: {question}"""
-    model = ChatAnthropic(model="claude-2")
-    prompt_template = ChatPromptTemplate.from_template(agent_instructions) + AIMessagePromptTemplate.from_template("{intermediate_steps}")
+
+def query_claude(request, startig_prompt=agent_instructions) -> str:    
+    
+    model = ChatAnthropic(model="claude-2",  max_tokens_to_sample=2000)
+    prompt_template = ChatPromptTemplate.from_template(startig_prompt) + AIMessagePromptTemplate.from_template("{intermediate_steps}")
     chain = prompt_template | model.bind(stop=["</tool_input>", "</final_answer>"])
     
     agent = AnthropicAgent(tools=tool_list, chain=chain)
