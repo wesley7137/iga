@@ -61,7 +61,7 @@ class Web_Voyager:
                 result = self.env.execute_action(shouldnt_build['tool'])
                 
             elif shouldnt_build["result"] == 'failure':
-
+                return 
             else:
                 raise ValueError("should_build result not recognized")
             #     tool_file = self.tool_manager.build_tool(self, task, should_build)
