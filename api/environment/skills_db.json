@@ -4,13 +4,13 @@
     "content": {
       "path": "tools.get_read_pdf_tool",
       "description": [
-                    "def readPDF(path) -> int:",    
-                    "This is function that parses a pdf as a string.",
-                    "Args:",
-                    "path: str --> input path",
-                    "Returns:",
-                    "path --> output path"
-                ]               
+        "def readPDF(path) -> int:",
+        "This is function that parses a pdf as a string.",
+        "Args:",
+        "path: str --> input path",
+        "Returns:",
+        "path --> output path"
+      ]
     }
   },
   {
@@ -18,13 +18,31 @@
     "content": {
       "path": "tools.search_tool",
       "description": [
-                    "def search(query) -> int:",    
-                    "A function that looks up a query in google",
-                    "Args:",
-                    "path: str --> input query",
-                    "Returns:",
-                    "results --> output results"
-                ]               
+        "def search(query) -> int:",
+        "A function that looks up a query in google",
+        "Args:",
+        "path: str --> input query",
+        "Returns:",
+        "results --> output results"
+      ]
     }
+  },
+  {
+    "name": "lol",
+    "content": {
+      "path": "lol",
+      "description": [
+        "lol"
+      ]
     }
+  },
+  {
+    "name": "lol",
+    "content": {
+      "path": "lol",
+      "description": [
+        "lol"
+      ]
+    }
+  }
 ]

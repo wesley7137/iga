@@ -3,6 +3,9 @@ import chromadb
 import openai
 
 
+OPENAI_KEY = "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"
+openai.api_key = OPENAI_KEY
+
 client = chromadb.Client()
 
 collection = client.get_or_create_collection("skills_vector_db")
