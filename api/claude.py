@@ -83,8 +83,13 @@ def query_claude(request) -> str:
         )
     ]
 
-    self_ask_with_search = initialize_agent(
-        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=False
+    agent = initialize_agent(
+        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, max_iterations=4
     )
-    response = self_ask_with_search.run(request)
-    return response
+    
+    for step in agent.iter(request):
+        if output := step.get("intermediate_step"):
+            action, value = output[0]
+            print(f"{action}: {value}")
+    # response = self_ask_with_search.run(request)
+    return value
