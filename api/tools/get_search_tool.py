@@ -7,7 +7,6 @@ def get_search_tool():
 
     return Tool(
         name="search",
-        func=lambda x : search.run(x),
+        func=lambda x: search.run(x),
         description="useful for when you need to ask with search (especially for a research paper)",
     )
-        
