@@ -1,4 +1,4 @@
-from agents.Web_Voyager_Env import Env
+from environment.Web_Voyager_Env import Env
 from agents.Tool_Manager import Tool_Manager
 from agents.Critic import Critic
 from agents.Task_Manager import Task_Manager
@@ -13,6 +13,7 @@ class Web_Voyager:
     def __init__(
         self,
         initial_task: Optional[str] = None,
+        initial_tools: dict = {},
         task_model_name: str = "claude2",
         task_llm_key: str = None,
         tool_model_name: str = "gpt4",
@@ -37,7 +38,7 @@ class Web_Voyager:
         self.max_iterations = max_iterations
         self.tool_library_dir = tool_library_dir
         self.history = history
-        self.tools = tools
+        self.tools = tools | initial_tools
         self.iteration = iteration
         self.tool_build_attempts = tool_build_attempts
         self.done = done
@@ -50,9 +51,19 @@ class Web_Voyager:
             raise ValueError("Agent has exceeded maximum iterations tool building")
         task = self.task_manager.get_task(self)
         for i in range(self.tool_build_attempts):
-            should_build = self.tool_manager.should_build(self, task)
-            print(should_build)
-            # if should_build['result']:
+            print('skills', self.tools)
+            shouldnt_build = self.tool_manager.should_build(self, task)
+            print('should_build', shouldnt_build)
+            if shouldnt_build["result"] == 'success':
+                #get llm to pick the best tool to use for the task
+
+                #execute the task
+                result = self.env.execute_action(shouldnt_build['tool'])
+                
+            elif shouldnt_build["result"] == 'failure':
+
+            else:
+                raise ValueError("should_build result not recognized")
             #     tool_file = self.tool_manager.build_tool(self, task, should_build)
             #     tool_eval = self.critic.evaluate_tool(self, tool_file)
             # code = self.tool_manager.code_task(self, task)
@@ -60,11 +71,16 @@ class Web_Voyager:
             # if code_eval['result']=='success':
             #     break
             # self.history[task['name']]={code_eval['result']: code}
-            #Can incorporate human feedback here
+            # Can incorporate human feedback here
 
 if __name__ == "__main__":
     initial_task = "Find me some bagels online"
-    web_voyager = Web_Voyager(initial_task=initial_task)
+    web_voyager = Web_Voyager(
+        initial_task=initial_task, 
+        initial_tools={
+            'useSelenium': { 'file': 'useSelenium.py', 'desc': 'Use Selenium to programmatically interact with a web browser'}, 
+            'useBeautifulSoup':{ 'file': 'useBeautifulSoup.py', 'desc': 'Use BeautifulSoup to scrape web content'},
+        })
     while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
         web_voyager.step()
         web_voyager.increment_iter()

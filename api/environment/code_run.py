@@ -1,8 +1,18 @@
 import subprocess
 import sys
+# from langchain.tools import Tool
+
+dependencies = [
+    "pydantic",
+    "langchain",
+    "flask",
+    "python-dotenv",
+    "torch",
+    "numpy",
+]  # add all dependenceis
 
 
-def run_code_with_pip_dependencies(dependencies, code):
+def run_code_with_pip_dependencies(code, dependencies=dependencies):
     """
     Install dependencies and run code
     Args:
@@ -20,19 +30,11 @@ def run_code_with_pip_dependencies(dependencies, code):
         print(f"An error occurred: {e}")
 
 
-dependencies = [
-    "pydantic",
-    "langchain",
-    "flask",
-    "python-dotenv",
-    "torch",
-    "numpy",
-]  # add all dependenceis
 
 
-def get_code_tool():
-    return Tool(
-        name="code",
-        func=lambda x: run_code_with_pip_dependencies(dependencies, x),
-        description="useful for when you need to run code",
-    )
+# def get_code_tool():
+#     return Tool(
+#         name="code",
+#         func=lambda x: run_code_with_pip_dependencies(dependencies, x),
+#         description="useful for when you need to run code",
+#     )

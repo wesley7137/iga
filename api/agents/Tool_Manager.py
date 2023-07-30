@@ -1,5 +1,7 @@
 from model import query_model
 from utils import read_txt_file_as_string, extract_python_code, write_tool
+import json as JSON
+
 class Tool_Manager:
     def __init__(self):
         return 
@@ -8,8 +10,9 @@ class Tool_Manager:
         print(task, str(web_voyager.tools), str(web_voyager.history))
         should_build_prompt = read_txt_file_as_string("prompts/should_build.txt").format(task, str(web_voyager.tools), str(web_voyager.history))
         response = query_model(should_build_prompt)
-        print(response)
+        print("response", response)
         #Add a check so that it is in the right format
+        response = JSON.loads(response)
         return response
 
     def build_tool(self, task, should_build):

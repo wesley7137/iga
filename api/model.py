@@ -16,7 +16,7 @@ def query_model(prompt, provider="openai"):
         ]
         )
 
-        print(completion.choices[0].message)
+        return completion.choices[0].message.content
 
     else:
         raise ValueError("Provider not supported")
