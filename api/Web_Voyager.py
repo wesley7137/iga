@@ -98,10 +98,10 @@ class Web_Voyager:
 if __name__ == "__main__":
     skills = initialize_skills()
     
-    initial_task = "please use the search tool to search about current research in string theory and give me the output"
+    initial_task = "please use the search tool to get me a url for an arxiv paper about string theory"
     web_voyager = Web_Voyager(
         initial_task=initial_task, 
         tools=skills)
-    while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
-        web_voyager.step()
-        web_voyager.increment_iter()
+    #while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
+    web_voyager.step()
+    #web_voyager.increment_iter()
