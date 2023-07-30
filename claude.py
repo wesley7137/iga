@@ -32,7 +32,7 @@ def query_claude(request):
     ]
 
     self_ask_with_search = initialize_agent(
-        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=False
+        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
     )
     response = self_ask_with_search.run(
         request
