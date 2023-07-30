@@ -17,7 +17,7 @@ class Tool_Manager:
         response = query_model(build_tool_prompt)
         python_file = response.split()[0]
         code = extract_python_code(response)
-        python_file = 'tools/{}'.format(python_file)
+        python_file = "tools/{}".format(python_file)
         write_tool(python_file, code)
         return python_file
 
@@ -26,6 +26,5 @@ class Tool_Manager:
         response = query_model(code_task_prompt)
         python_file = response.split()[0]
         code = extract_python_code(response)
-        python_file = 'tasks/{}'.format(python_file)
+        python_file = "tasks/{}".format(python_file)
         return python_file
-

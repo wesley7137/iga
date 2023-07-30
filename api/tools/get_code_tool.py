@@ -1,6 +1,7 @@
 import subprocess
 import sys
 
+
 def run_code_with_pip_dependencies(dependencies, code):
     """
     Install dependencies and run code
@@ -11,7 +12,7 @@ def run_code_with_pip_dependencies(dependencies, code):
     try:
         # Install required dependencies
         for dep in dependencies:
-            subprocess.check_call([sys.executable, '-m', 'pip', 'install', dep])
+            subprocess.check_call([sys.executable, "-m", "pip", "install", dep])
 
         # Execute the provided code
         exec(code)
@@ -19,14 +20,19 @@ def run_code_with_pip_dependencies(dependencies, code):
         print(f"An error occurred: {e}")
 
 
-dependencies = ['pydantic', 'langchain', 'flask', 'python-dotenv', 'torch', 'numpy'] # add all dependenceis
+dependencies = [
+    "pydantic",
+    "langchain",
+    "flask",
+    "python-dotenv",
+    "torch",
+    "numpy",
+]  # add all dependenceis
 
 
 def get_code_tool():
-
     return Tool(
         name="code",
-        func=lambda x : run_code_with_pip_dependencies(dependencies,x),
+        func=lambda x: run_code_with_pip_dependencies(dependencies, x),
         description="useful for when you need to run code",
     )
-        

@@ -18,12 +18,12 @@ class Web_Voyager:
         tool_model_name: str = "gpt4",
         tool_llm_key: str = None,
         max_iterations: int = 50,
-        tool_library_dir: str = './tools',
+        tool_library_dir: str = "./tools",
         history: dict = {},
         tools: dict = {},
         iteration: int = 0,
         tool_build_attempts: int = 5,
-        done: bool=False
+        done: bool = False,
     ):
         self.initial_task = initial_task
         self.env = Env()
@@ -68,17 +68,3 @@ if __name__ == "__main__":
     while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
         web_voyager.step()
         web_voyager.increment_iter()
-
-
-
-
-
-
-
-
-
-
-
-        
-
-

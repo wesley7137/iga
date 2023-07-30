@@ -1,5 +1,7 @@
 from model import query_model
 from utils import read_txt_file_as_string
+
+
 class Critic:
     def __init__(self):
         pass
@@ -16,4 +18,3 @@ class Critic:
         critc_prompt = read_txt_file_as_string("prompts/critic.txt").format(task, str(prev), str(curr))
         response = query_model(critc_prompt)
         return response
-
