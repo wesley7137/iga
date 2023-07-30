@@ -67,6 +67,7 @@ class Web_Voyager:
                 parameters = tool_lst[1]
                 #execute the task
                 result = self.env.execute_action(action_file, parameters)
+                break
             elif shouldnt_build["result"] == 'failure':
                 tool_file = self.tool_manager.build_tool(task, shouldnt_build)
                 #NEED TO CHECK IF SKILL BUILT WORKS. MAYBE ASK CLAUDE TO WRITE A TEST CASE
