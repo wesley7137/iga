@@ -1,0 +1,16 @@
+[
+  {
+    "name": "readPdf",
+    "content": {
+      "path": "tools.get_read_pdf_tool",
+      "description": "Reads a PDF and returns its first 3 pages"
+    }
+  },
+  {
+    "name": "search",
+    "content": {
+      "path": "tools.search_tool",
+      "description": "Searches the web for a given query"
+    }
+  }
+]
