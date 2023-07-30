@@ -1,10 +1,14 @@
-You are an agent attempting to performt the following task:
+You are an agent attempting to perform the following task:
 
 {0}
 
 However you first need to build a new tool (a python file) that performs a function. Here is some information on the tool.
 
 {1}
+
+Here are the tools you have to build this new tool. This new tool should use existing tools.
+
+{}
 
 Example format:
 "summarize_pdf.py

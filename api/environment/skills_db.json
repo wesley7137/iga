@@ -1,0 +1,30 @@
+[
+  {
+    "name": "readPdf",
+    "content": {
+      "path": "tools/get_read_pdf_tool.py",
+      "description": [
+        "def readPDF(path) -> int:",
+        "This is function that parses a pdf as a string.",
+        "Args:",
+        "path: str --> input path",
+        "Returns:",
+        "path --> output path"
+      ]
+    }
+  },
+  {
+    "name": "search",
+    "content": {
+      "path": "tools/get_search_tool.py",
+      "description": [
+        "def search(query) -> str:",
+        "A function that looks up a query in google",
+        "Args:",
+        "path: str --> input query",
+        "Returns:",
+        "results --> output results"
+      ]
+    }
+  }
+]

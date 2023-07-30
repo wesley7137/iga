@@ -9,10 +9,6 @@ You have these current tools:
 
 {1} 
 
-In addition, this is what you have attempted so far (history):
-
-{2}
-
 The output should be in the following format:
 
 {{"result": "the result", "explanation": "the explanation"}}

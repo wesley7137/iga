@@ -1,12 +1,9 @@
-# from langchain.tools import BaseTool, StructuredTool, Tool, tool
-# from langchain.utilities import GoogleSerperAPIWrapper
+from langchain.utilities import GoogleSerperAPIWrapper
+#GoogleSerperAPIWrapper.serper_api_key =  "12791d683d28e8c5f696fa10ac9687c7fe73e315"
 
+query = "info on string theory"
 
-# def get_search_tool():
-#     search = GoogleSerperAPIWrapper()
+search = GoogleSerperAPIWrapper()
+response = search.run(query)
 
-    # return Tool(
-    #     name="search",
-    #     func=lambda x: search.run(x),
-    #     description="useful for when you need to ask with search (especially for a research paper)",
-    # )
+print(response)

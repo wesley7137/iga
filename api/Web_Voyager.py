@@ -3,6 +3,8 @@ from agents.Tool_Manager import Tool_Manager
 from agents.Critic import Critic
 from agents.Task_Manager import Task_Manager
 from typing import Optional
+from environment.manage_skills import initialize_skills
+import json
 
 from dotenv import load_dotenv
 
@@ -28,7 +30,7 @@ class Web_Voyager:
     ):
         self.initial_task = initial_task
         self.env = Env()
-        self.tool_manager = Tool_Manager()
+        self.tool_manager = Tool_Manager(tools)
         self.critic = Critic()
         self.task_manager = Task_Manager()
         self.task_model_name = task_model_name
@@ -38,7 +40,7 @@ class Web_Voyager:
         self.max_iterations = max_iterations
         self.tool_library_dir = tool_library_dir
         self.history = history
-        self.tools = tools | initial_tools
+        self.tools = tools
         self.iteration = iteration
         self.tool_build_attempts = tool_build_attempts
         self.done = done
@@ -62,46 +64,54 @@ class Web_Voyager:
             raise ValueError("Agent has exceeded maximum iterations tool building")
         task = self.task_manager.get_task(self)
         for i in range(self.tool_build_attempts):
+            print("new attempt")
+            #print('skills', self.tools)
             shouldnt_build = self.tool_manager.should_build(self, task)
             if shouldnt_build["result"] == 'success':
                 #get llm to pick the best tool to use for the task
-
-                #llm returns the name of the tool 
-
-                #get the file name of the tool
-
-                #execute the tool using the env
-                # result = self.env.execute_action()
-                return 
+                tool_lst = self.tool_manager.get_tool(task)
+                print(tool_lst)
+                tool_lst = json.loads(tool_lst)
+                print(tool_lst)
+                action_file = tool_lst[0]
+                parameters = tool_lst[1]
+                #execute the task
+                result = self.env.execute_action(action_file, parameters)
+                break
             elif shouldnt_build["result"] == 'failure':
-                tool_file = self.tool_manager.build_tool(self, task, shouldnt_build['explanation'])
-                tool_eval = self.critic.evaluate_tool(self, tool_file)
+                tool_file = self.tool_manager.build_tool(task, shouldnt_build)
+                #NEED TO CHECK IF SKILL BUILT WORKS. MAYBE ASK CLAUDE TO WRITE A TEST CASE
+                tool_eval = self.critic.evaluate_tool(tool_file)
+                tool_lst =self.tool_manager.get_tool(task)
+                tool_lst = json.loads(tool_lst)
 
-                # if the critic says the tool is good, then we can test it 
-                # if we execute the tool and it works, then we can break out of the loop
-                # if we execute the tool and it doesn't work, then we can try to build another tool
+                print(tool_lst)
+                action_file = tool_lst[0]
+                parameters = tool_lst[1]
+                result = self.env.execute_action(action_file, parameters)
 
-                # if the critic says the tool is bad, then we can try to build another tool
+            #code_eval = self.critic.evaluate_task(task, self.env)
+
+            #if code_eval['result']=='success':
+            #     break
+            #else:
+                #update the skill dict
+                #evalute the py file, error, and changes in state to refine the task, 
+            # self.history[task['name']]={code_eval['result']: code}
+            # Can incorporate human feedback here            
+
+
 
             else:
                 raise ValueError("should_build result not recognized")
-            #     tool_file = self.tool_manager.build_tool(self, task, should_build)
-            #     tool_eval = self.critic.evaluate_tool(self, tool_file)
-            # code = self.tool_manager.code_task(self, task)
-            # code_eval = self.critic.evaluate_task(self, code)
-            # if code_eval['result']=='success':
-            #     break
-            # self.history[task['name']]={code_eval['result']: code}
-            # Can incorporate human feedback here
 
 if __name__ == "__main__":
-    initial_task = "Find me some bagels online"
+    skills = initialize_skills()
+    
+    initial_task = "please use the search tool to search about current research in string theory and give me the output"
     web_voyager = Web_Voyager(
         initial_task=initial_task, 
-        initial_tools={
-            'useSelenium': { 'file': 'useSelenium.py', 'desc': 'Use Selenium to programmatically interact with a web browser'}, 
-            'useBeautifulSoup':{ 'file': 'useBeautifulSoup.py', 'desc': 'Use BeautifulSoup to scrape web content'},
-        })
+        tools=skills)
     while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
         web_voyager.step()
         web_voyager.increment_iter()

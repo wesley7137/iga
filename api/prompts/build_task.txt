@@ -6,10 +6,6 @@ You have these current tools:
 
 {} 
 
-In addition, this is what you have attempted so far (history):
-
-{}
-
 You are able to and encouraged to call any functions in the tool library provided. Further, your response should start with the name of the file the code will be stored in. Also be sure
 to include a docstring with a description of the tool
 
