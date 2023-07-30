@@ -26,5 +26,20 @@
         "results --> output results"
       ]
     }
+  },
+  {
+    "name": "download",
+    "content": {
+      "path": "tools/get_download_tool.py",
+      "description": [
+        "def download_file(url) -> str:",
+        "Install dependencies and run code",
+        "Args:",
+        "url (str): url to download file from",
+        "Returns:",
+        "results --> output results"
+      ]
+    }
   }
+
 ]
