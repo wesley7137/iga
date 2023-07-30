@@ -44,11 +44,22 @@ class Web_Voyager:
         self.iteration = iteration
         self.tool_build_attempts = tool_build_attempts
         self.done = done
+        self.stop_flag = False
+
+    def should_stop(self):
+        return self.stop_flag
+
+    def stop(self):
+        self.stop_flag = True
 
     def increment_iter(self):
         self.iteration += 1
 
     def step(self):
+        if self.should_stop():
+            # Logic to clean up or finalize any tasks before stopping
+            return
+
         if self.iteration > self.max_iterations:
             raise ValueError("Agent has exceeded maximum iterations tool building")
         task = self.task_manager.get_task(self)
@@ -56,7 +67,6 @@ class Web_Voyager:
             print("new attempt")
             #print('skills', self.tools)
             shouldnt_build = self.tool_manager.should_build(self, task)
-            print('should_build', shouldnt_build)
             if shouldnt_build["result"] == 'success':
                 #get llm to pick the best tool to use for the task
                 tool_lst = self.tool_manager.get_tool(task)
