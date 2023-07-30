@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { use, useState, useEffect } from "react";
 import { Inter } from "next/font/google";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PlayOutline, StopOutline } from "@carbon/icons-react";
 import KnowledgeGraph from "@/components/Knowledge";
 import { Chart } from "react-google-charts";
 
@@ -17,6 +18,44 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [tab, setTab] = useState("dashboard");
+
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [isStarted, setIsStarted] = useState(false);
+
+  useEffect(() => {
+    const newSocket = new WebSocket("ws://localhost:5001/data");
+    setSocket(newSocket);
+
+    newSocket.onopen = () => {
+      console.log("connected");
+    };
+
+    newSocket.onmessage = (event) => {
+      console.log("data from the back end: ", event.data);
+    };
+
+    newSocket.onclose = () => {
+      console.log("user disconnected");
+    };
+
+    return () => {
+      newSocket.close();
+    };
+  }, []);
+
+  const handleStart = () => {
+    if (socket) {
+      socket.send(JSON.stringify({ action: "start" }));
+      setIsStarted(true);
+    }
+  };
+
+  const handleStop = () => {
+    if (socket) {
+      socket.send(JSON.stringify({ action: "stop" }));
+      setIsStarted(false);
+    }
+  };
 
   const columns = [
     { type: "string", id: "Title" },
@@ -133,9 +172,26 @@ export default function Home() {
           value={tab}
         >
           <div className="flex w-full justify-between items-center">
-            <h1 className="text-3xl text-gray-700 flex items-center">
-              {tab.toLocaleUpperCase()}
-            </h1>
+            <div className="flex items-center gap-4">
+              {!isStarted ? (
+                <button
+                  className="rounded bg-slate-700 transition text-white p-2 text-xs hover:bg-green-500"
+                  onClick={handleStart}
+                >
+                  <PlayOutline className="w-6 h-6" />
+                </button>
+              ) : (
+                <button
+                  className="rounded bg-slate-700 transition text-white p-2 text-xs hover:bg-red-500"
+                  onClick={handleStop}
+                >
+                  <StopOutline className="w-6 h-6" />
+                </button>
+              )}
+              <h1 className="text-3xl text-gray-700 flex items-center">
+                {tab.toLocaleUpperCase()}
+              </h1>
+            </div>
             <TabsList className="grid grid-cols-4 rounded border flex">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="timeline">Timeline</TabsTrigger>
