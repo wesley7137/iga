@@ -1,0 +1,15 @@
+Analyze your previous and current state and determine if the followibg task was successfully completed:
+
+{task}
+
+This is your previous and current state:
+
+{previous_state}
+{state}
+
+Provide reasoning based on page title, URL, page contents. If failed, provide a detailed critique on what needs to be fixed.
+Your response should be in the form of a dictionary as follows:
+
+Example:
+{"result": "failure",
+"explanation": "success"}

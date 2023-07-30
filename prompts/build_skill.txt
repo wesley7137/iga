@@ -1,0 +1,15 @@
+Provide reusable browser automation code for the following task:
+
+{task}
+
+You have these current skills:
+
+{skills}. 
+
+In addition, this is what you have attempted so far:
+
+{history}
+
+The code should use page element selectors and fill out any required forms. You are able
+to and encouraged to call any functions in the skill library provided. Name the main function based on the task and make it 
+generic to work on similar websites.

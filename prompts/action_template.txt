@@ -1,0 +1,12 @@
+Propose the next web browsing task for me to attempt based on my current skills and history.
+Here are my current skills:
+
+{skills}
+
+Here is what I have attempted to do so far, and my succeses:
+
+{history}
+
+The task should encourage me to visit new types of websites and interact with new page elements,
+while not being too difficult. Provide a clear high-level task description like 'Register an account on example.com'
+or 'Purchase an item on shop.com
