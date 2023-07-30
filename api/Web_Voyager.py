@@ -46,6 +46,9 @@ class Web_Voyager:
         self.done = done
         self.stop_flag = False
 
+    async def emit_status(self, data):
+        await emit_data_via_sockets(data)
+
     def should_stop(self):
         return self.stop_flag
 
@@ -99,8 +102,6 @@ class Web_Voyager:
                 #evalute the py file, error, and changes in state to refine the task, 
             # self.history[task['name']]={code_eval['result']: code}
             # Can incorporate human feedback here            
-
-
 
             else:
                 raise ValueError("should_build result not recognized")

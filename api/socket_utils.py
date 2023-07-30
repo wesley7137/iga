@@ -1,8 +1,6 @@
-from flask_socketio import SocketIO
+import json
 
-# Create the SocketIO object
-socketio = SocketIO()
-
-def emit_event(event_name, data):
-    """Emit an event to connected clients"""
-    socketio.emit(event_name, data)
+async def emit_data_via_sockets(clients, data):
+    message = json.dumps(data)
+    for client in clients:
+        await client.send_text(message)
