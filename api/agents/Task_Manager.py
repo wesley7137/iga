@@ -12,7 +12,7 @@ class Task_Manager:
             return web_voyager.initial_task
 
         #OR REPLACE THIS WITH PREDEFINED TASKS
-        action_prompt = read_txt_file_as_string("prompts/action_template.txt").format(str(web_voyager.tools), str(web_voyager.history))
+        action_prompt = read_txt_file_as_string("api/prompts/action_template.txt").format(str(web_voyager.tools), str(web_voyager.history))
         response = query_model(action_prompt)
         return response
 

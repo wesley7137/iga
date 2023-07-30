@@ -17,12 +17,18 @@ class Env:
         else:
             return None
 
-    def execute_action(self, action):
+    def execute_action(self, action, parameters):
         self.current += 1
         self.states[self.current] = action
-
-        code = read_txt_file_as_string("../tools/"+action+".py")
-        return run_code_with_pip_dependencies(code)
+        print(action)
+        path = "api/tools/" + action
+        print(path)
+        code = read_txt_file_as_string(path)
+        print(code)
+        print(parameters[0])
+        formatted_code = code.format(parameters[0])
+        print(formatted_code)
+        return run_code_with_pip_dependencies(formatted_code)
 
 
 

@@ -12,7 +12,7 @@ class Tool_Manager:
 
     def should_build(self, web_voyager, task):
         print(task, str(web_voyager.tools), str(web_voyager.history))
-        should_build_prompt = read_txt_file_as_string("prompts/should_build.txt").format(task, str(web_voyager.tools))
+        should_build_prompt = read_txt_file_as_string("api/prompts/should_build.txt").format(task, str(web_voyager.tools))
         response = query_model(should_build_prompt)
         print("response", response)
         #Add a check so that it is in the right format
@@ -20,7 +20,7 @@ class Tool_Manager:
         return response
 
     def build_tool(self, task, should_build):
-        build_tool_prompt = read_txt_file_as_string("prompts/build_tool.txt").format(task, should_build['explanation'])
+        build_tool_prompt = read_txt_file_as_string("api/prompts/build_tool.txt").format(task, should_build['explanation'], self.tools)
         response = query_model(build_tool_prompt)
         python_file = response.split()[0]
         code = extract_python_code(response)
@@ -29,7 +29,7 @@ class Tool_Manager:
         return python_file
 
     def code_task(self, web_voyager, task):
-        code_task_prompt = read_txt_file_as_string("prompts/build_task.txt").format(task, self.tools)
+        code_task_prompt = read_txt_file_as_string("api/prompts/build_task.txt").format(task, self.tools)
         response = query_model(code_task_prompt)
         python_file = response.split()[0]
         code = extract_python_code(response)
@@ -37,7 +37,7 @@ class Tool_Manager:
         return python_file
 
     def get_tool(self, task):
-        code_task_prompt = read_txt_file_as_string("prompts/pick_skill_template.txt").format(task, self.tools)
+        code_task_prompt = read_txt_file_as_string("api/prompts/pick_skill_template.txt").format(task, self.tools)
         response = query_model(code_task_prompt)
         return response
 

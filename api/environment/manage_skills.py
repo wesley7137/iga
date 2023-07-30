@@ -1,10 +1,13 @@
 import json
 import chromadb
 import openai
+from dotenv import load_dotenv
+import os
+# Load the environment variables from the .env file
+load_dotenv()
 
-
-OPENAI_KEY = "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"
-openai.api_key = OPENAI_KEY
+api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = api_key
 
 client = chromadb.Client()
 

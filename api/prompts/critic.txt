@@ -11,5 +11,5 @@ Provide reasoning based on page title, URL, page contents. If failed, provide a 
 Your response should be in the form of a dictionary as follows:
 
 Example:
-{"result": "failure",
-"explanation": "success"}
+{{"result": "failure",
+"explanation": "success"}}

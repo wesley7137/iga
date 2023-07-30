@@ -6,6 +6,10 @@ However you first need to build a new tool that performs a function. Here is som
 
 {}
 
+Here are the tools you have to build this new tool. This new tool should use existing tools.
+
+{}
+
 Example format:
 
 "summarize_pdf.py

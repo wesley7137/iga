@@ -21,8 +21,8 @@ def run_code_with_pip_dependencies(code, dependencies=dependencies):
     """
     try:
         # Install required dependencies
-        for dep in dependencies:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", dep])
+        #for dep in dependencies:
+        #    subprocess.check_call([sys.executable, "-m", "pip", "install", dep])
 
         # Execute the provided code
         exec(code)

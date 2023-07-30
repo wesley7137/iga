@@ -7,10 +7,17 @@ You currently have the following skills to choose from.
 {}
 
 You may only choose to use one skill to accomplish the task. Return
-the name the skill you wish to run to accomplish the task.
+the file that contains the skill you wish to run to accomplish the task. In addition,
+if the function takes in one or more parameters include these arguments in your response
+according to the following format
 
 For example:
 if you want to run this file
-'get_search_tool.py'
-return
-'get_search_tool'
+get_search_tool.py
+
+with this query:
+"information about string theory"
+
+return as a JSON list (this will be converted to a python list using json.loads so make sure that it works)
+Also note that ../tools/ will be appended to the file path so just give the name of the file not the path: 
+[get_search_tool.py, [query]]

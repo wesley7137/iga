@@ -7,7 +7,7 @@ from langchain.agents import AgentType
 from langchain.utilities import GoogleSerperAPIWrapper
 from langchain.agents import initialize_agent
 from langchain.memory import ConversationBufferMemory
-from langchain.prompts.chat import (
+from langchain.api/prompts.chat import (
     ChatPromptTemplate,
     MessagesPlaceholder,
     SystemMessagePromptTemplate,
