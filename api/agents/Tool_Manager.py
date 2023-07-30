@@ -19,12 +19,12 @@ class Tool_Manager:
         response = JSON.loads(response)
         return response
 
-    def build_tool(self, task, should_build):
-        build_tool_prompt = read_txt_file_as_string("api/prompts/build_tool.txt").format(task, should_build['explanation'], self.tools)
+    def build_tool(self, task, tools, should_build):
+        build_tool_prompt = read_txt_file_as_string("api/prompts/build_tool.txt").format(task, should_build['explanation'], tools)
         response = query_model(build_tool_prompt)
         python_file = response.split()[0]
         code = extract_python_code(response)
-        python_file = "tools/{}".format(python_file)
+        python_file = "api/tools/{}".format(python_file)
         write_tool(python_file, code)
         return python_file
 

@@ -25,7 +25,8 @@ def run_code_with_pip_dependencies(code, dependencies=dependencies):
         #    subprocess.check_call([sys.executable, "-m", "pip", "install", dep])
 
         # Execute the provided code
-        exec(code)
+        response = exec(code)
+        print(response)
     except Exception as e:
         print(f"An error occurred: {e}")
 

@@ -8,9 +8,17 @@ However you first need to build a new tool (a python file) that performs a funct
 
 Here are the tools you have to build this new tool. This new tool should use existing tools.
 
-{}
+{2}
 
 Example format:
-"summarize_pdf.py
+get_search_tool.py
 
-<CODEBLOCK TO BE WRITTEN TO FILE>"
+from langchain.utilities import GoogleSerperAPIWrapper
+#GoogleSerperAPIWrapper.serper_api_key =  "12791d683d28e8c5f696fa10ac9687c7fe73e315"
+
+query = "{{}}"
+
+search = GoogleSerperAPIWrapper()
+response = search.run(query)
+
+print(response)
