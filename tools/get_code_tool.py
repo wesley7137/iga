@@ -26,7 +26,7 @@ dependencies = ['pydantic', 'langchain', 'flask', 'python-dotenv', 'torch', 'num
 def get_code_tool():
 
     return Tool(
-        name="search",
+        name="code",
         func=lambda x : run_code_with_pip_dependencies(dependencies,x),
         description="useful for when you need to run code",
     )
