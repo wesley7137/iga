@@ -74,11 +74,13 @@ tool_list = [
     # ReadPDFTool
 ]
 
-agent_instructions = """You are a helpful assistant. Help the user answer any questions.
+
+def query_claude(request,tools=tool_list) -> str:
+    agent_instructions = """You are a helpful assistant. Help the user answer any questions.
 
     You have access to the following tools:
 
-    {tool_list}
+    {tools}
 
     In order to use a tool, you can use <tool></tool> and <tool_input></tool_input> tags. \
     You will then get back a response in the form <observation></observation>
@@ -94,15 +96,12 @@ agent_instructions = """You are a helpful assistant. Help the user answer any qu
     Begin!
 
     Question: {question}"""
-
-def query_claude(request, startig_prompt=agent_instructions) -> str:    
-    
-    model = ChatAnthropic(model="claude-2",  max_tokens_to_sample=2000)
-    prompt_template = ChatPromptTemplate.from_template(startig_prompt) + AIMessagePromptTemplate.from_template("{intermediate_steps}")
+    model = ChatAnthropic(model="claude-2")
+    prompt_template = ChatPromptTemplate.from_template(agent_instructions) + AIMessagePromptTemplate.from_template("{intermediate_steps}")
     chain = prompt_template | model.bind(stop=["</tool_input>", "</final_answer>"])
     
     agent = AnthropicAgent(tools=tool_list, chain=chain)
-    agent_executor = AgentExecutor(agent=agent, tools=tool_list, verbose=True)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
        
     for step in agent_executor.iter(request):
         print(step)
