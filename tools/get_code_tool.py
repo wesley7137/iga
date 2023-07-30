@@ -1,51 +1,33 @@
-# Take in code, and execute it with Modal
-import tempfile
 import subprocess
-import os
+import sys
+from langchain.tools import Tool
 
-source_code = """
-import numpy as np
+def run_code_with_pip_dependencies(dependencies, code):
+    """
+    Install dependencies and run code
+    Args:
+    dependencies (list): List of packages to install
+    code (str): Python code to run
+    """
+    try:
+        # Install required dependencies
+        for dep in dependencies:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', dep])
 
-arr = np.array([1, 2, 3, 4, 5])
-
-mean = np.mean(arr)
-print("Mean of given array is", mean)
-"""
-
-
-def run_code(source_code):
-    # Add tabs to source code
-    source_code = "\n".join(["    " + line for line in source_code.split("\n")])
-
-    # Wrap function in a Modal decorator
-    code = f"@stub.function()\ndef main():\n{source_code}"
-
-    # Create a stub
-    code = "stub = modal.Stub()\n" + code
-
-    # Import Modal
-    code = "import modal\n" + code
-
-    # Create a temporary file
-    with tempfile.NamedTemporaryFile(
-        mode="w", suffix=".py", delete=False, dir=f"{os.getcwd()}/tmp"
-    ) as f:
-        f.write(code)
-        f.close()
-
-        # Run the file using Modal
-        res = subprocess.run(
-            [f"modal run {f.name}"],
-            executable="/bin/bash",
-            shell=True,
-            capture_output=True,
-        )
-
-        return (res.stdout.decode("utf-8"))
-
-    # Delete the temporary file
-    # os.remove(f.name)
+        # Execute the provided code
+        exec(code)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
-if __name__ == "__main__":
-    print(run_code(source_code))
+dependencies = ['pydantic', 'langchain', 'flask', 'python-dotenv', 'torch', 'numpy'] # add all dependenceis
+
+
+def get_code_tool():
+
+    return Tool(
+        name="search",
+        func=lambda x : run_code_with_pip_dependencies(dependencies,x),
+        description="useful for when you need to run code",
+    )
+        
