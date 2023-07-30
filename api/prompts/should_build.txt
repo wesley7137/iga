@@ -1,0 +1,23 @@
+You have the following task, and you need to determine whether you have the sufficient tools to complete the task using python:
+
+{}
+
+You have these current tools:
+
+{} 
+
+In addition, this is what you have attempted so far (history):
+
+{}
+
+The output should be in the following format:
+
+{"result": "explanation"}
+If you do not need to build further tools return:
+
+{"success": None}
+
+If you do need to build an additional tool, you must provide an explanation for what this tool is and what it needs to accomplish such as
+in the following example:
+{"failure": "I require a tool that allows me to open and and summarize a pdf file. The inputs of the function will be a file path and
+the output will be a summary of the given pdf"}

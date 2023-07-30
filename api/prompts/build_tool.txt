@@ -1,0 +1,12 @@
+You are an agent attempting to performt the following task:
+
+{}
+
+However you first need to build a new tool that performs a function. Here is some information on the tool.
+
+{}
+
+Example format:
+
+"summarize_pdf.py
+<CODEBLOCK TO BE WRITTEN TO FILE>"
