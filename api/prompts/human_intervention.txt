@@ -1,10 +1,10 @@
 It appears that I have failed to perform the following task:
 
-{task}
+{}
 
 Here are my previous attempts:
 
-{attempts}
+{}
 
 Please provide step-by-step instructions to guide me in constructing this web page design.
 Break it down into smaller sub-tasks I can follow incrementally.
