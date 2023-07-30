@@ -18,7 +18,9 @@ from langchain.prompts.chat import (
 load_dotenv()
 
 
-llm = ChatAnthropic()
+# query_template = ChatPromptTemplate()
+
+llm = ChatAnthropic(model="claude-2",max_tokens_to_sample=2000)
 search = GoogleSerperAPIWrapper()
 tools = [
     Tool(
@@ -29,8 +31,8 @@ tools = [
 ]
 
 self_ask_with_search = initialize_agent(
-    tools, llm, agent=AgentType.SELF_ASK_WITH_SEARCH, verbose=True
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=False
 )
 self_ask_with_search.run(
-    "What is the hometown of the reigning men's U.S. Open champion?"
+    "Get me the arxiv url of the 3 factor model paper by Fama and French",
 )
