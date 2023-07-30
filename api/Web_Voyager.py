@@ -56,11 +56,12 @@ class Web_Voyager:
             print('should_build', shouldnt_build)
             if shouldnt_build["result"] == 'success':
                 #get llm to pick the best tool to use for the task
-
+                action_file = self.tool_manager.get_tool()
                 #execute the task
-                result = self.env.execute_action(shouldnt_build['tool'])
+                result = self.env.execute_action(action_file)
                 
             elif shouldnt_build["result"] == 'failure':
+
                 return 
             else:
                 raise ValueError("should_build result not recognized")
@@ -84,3 +85,16 @@ if __name__ == "__main__":
     while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
         web_voyager.step()
         web_voyager.increment_iter()
+
+
+def add(a, b) -> int;
+    """
+    This is function that adds two numbers.
+    Args:
+        a: int --> input integer
+        b: int --> input integer
+    Returns:
+        sum: int --> sum of two input integers
+    
+    
+    """
