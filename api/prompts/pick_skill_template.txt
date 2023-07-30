@@ -1,2 +1,16 @@
-take in explanation and list of skills
-return the name of the skill that we need.
+You are an agent attempting to perform the following task:
+
+{}
+
+You currently have the following skills to choose from.
+
+{}
+
+You may only choose to use one skill to accomplish the task. Return
+the name the skill you wish to run to accomplish the task.
+
+For example:
+if you want to run this file
+'get_search_tool.py'
+return
+'get_search_tool'
