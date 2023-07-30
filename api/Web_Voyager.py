@@ -70,7 +70,7 @@ class Web_Voyager:
             if shouldnt_build["result"] == 'success':
                 #get llm to pick the best tool to use for the task
                 tool_lst = self.tool_manager.get_tool(task)
-                print(tool_lst)
+                #print(tool_lst)
                 tool_lst = json.loads(tool_lst)
                 print(tool_lst)
                 action_file = tool_lst[0]
@@ -79,7 +79,7 @@ class Web_Voyager:
                 result = self.env.execute_action(action_file, parameters)
                 break
             elif shouldnt_build["result"] == 'failure':
-                tool_file = self.tool_manager.build_tool(task, shouldnt_build)
+                tool_file = self.tool_manager.build_tool(task, self.tools, shouldnt_build)
                 #NEED TO CHECK IF SKILL BUILT WORKS. MAYBE ASK CLAUDE TO WRITE A TEST CASE
                 tool_eval = self.critic.evaluate_tool(tool_file)
                 tool_lst =self.tool_manager.get_tool(task)
@@ -108,7 +108,7 @@ class Web_Voyager:
 if __name__ == "__main__":
     skills = initialize_skills()
     
-    initial_task = "please use the search tool to get me a url for an arxiv paper about string theory"
+    initial_task = "please search for an arxiv paper pdf about string theory and download it "
     web_voyager = Web_Voyager(
         initial_task=initial_task, 
         tools=skills)

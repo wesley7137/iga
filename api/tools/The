@@ -1,0 +1,30 @@
+import requests
+from langchain.utilities import GoogleSerperAPIWrapper
+from bs4 import BeautifulSoup
+
+def search_arxiv_pdf(query):
+    # Instance of GoogleSerperAPIWrapper
+    search = GoogleSerperAPIWrapper()
+    # Following your previous approach: "12791d683d28e8c5f696fa10ac9687c7fe73e315"
+    # Don't forget to replace with your valid key
+    GoogleSerperAPIWrapper.serper_api_key = "your_google_serper_api_key" 
+
+    # Fetch search results
+    response = search.run(query)
+    soup = BeautifulSoup(response, "html.parser")
+
+    # Filter arxiv PDF links
+    for link in soup.find_all('a'):
+        href = link.get('href')
+        if href.startswith('https://arxiv.org') and href.endswith('.pdf'):
+            return href
+    
+    return None
+
+query = "string theory"
+pdf_link = search_arxiv_pdf(query)
+
+if pdf_link:
+    print(f"PDF found: {pdf_link}")
+else:
+    print("No PDF found on Arxiv with the given query.")
