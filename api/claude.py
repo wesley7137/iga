@@ -20,7 +20,7 @@ load_dotenv()
 
 # query_template = ChatPromptTemplate()
 
-def query_claude(request):
+def query_claude(request) -> str:
     llm = ChatAnthropic(model="claude-2",max_tokens_to_sample=2000)
     search = GoogleSerperAPIWrapper()
     tools = [
@@ -32,7 +32,7 @@ def query_claude(request):
     ]
 
     self_ask_with_search = initialize_agent(
-        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
+        tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=False
     )
     response = self_ask_with_search.run(
         request
