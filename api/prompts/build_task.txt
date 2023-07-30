@@ -1,0 +1,20 @@
+Provide reusable browser automation code for the following task:
+
+{}
+
+You have these current tools:
+
+{} 
+
+In addition, this is what you have attempted so far (history):
+
+{}
+
+You are able to and encouraged to call any functions in the tool library provided. Name the main function based on the task and make it 
+generic to work on similar websites. Further, your response should start with the name of the file the code will be stored in. Also be sure
+to include a docstring with a description of the tool
+
+Example format:
+
+"download_summarize_pdf.py
+<CODEBLOCK TO BE WRITTEN TO FILE>"
