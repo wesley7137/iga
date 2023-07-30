@@ -2,11 +2,17 @@ from agents.Web_Voyager_Env import Env
 from agents.Tool_Manager import Tool_Manager
 from agents.Critic import Critic
 from agents.Task_Manager import Task_Manager
+from typing import Optional
+
+from dotenv import load_dotenv
+
+load_dotenv() # This will load all the environment variables from a .env file located in the same directory as the script
 
 
 class Web_Voyager:
     def __init__(
         self,
+        initial_task: Optional[str] = None,
         task_model_name: str = "claude2",
         task_llm_key: str = None,
         tool_model_name: str = "gpt4",
@@ -19,8 +25,9 @@ class Web_Voyager:
         tool_build_attempts: int = 5,
         done: bool = False,
     ):
+        self.initial_task = initial_task
         self.env = Env()
-        self.s_builder = Tool_Manager()
+        self.tool_manager = Tool_Manager()
         self.critic = Critic()
         self.task_manager = Task_Manager()
         self.task_model_name = task_model_name
@@ -44,19 +51,20 @@ class Web_Voyager:
         task = self.task_manager.get_task(self)
         for i in range(self.tool_build_attempts):
             should_build = self.tool_manager.should_build(self, task)
-            if should_build["result"]:
-                tool_file = self.tool_manager.build_tool(self, task, should_build)
-                tool_eval = self.critic.evaluate_tool(self, tool_file)
-            code = self.tool_manager.code_task(self, task)
-            code_eval = self.critic.evaluate_task(self, code)
-            if code_eval["result"] == "success":
-                break
-            self.history[task["name"]] = {code_eval["result"]: code}
-            # Can incorporate human feedback here
-
+            print(should_build)
+            # if should_build['result']:
+            #     tool_file = self.tool_manager.build_tool(self, task, should_build)
+            #     tool_eval = self.critic.evaluate_tool(self, tool_file)
+            # code = self.tool_manager.code_task(self, task)
+            # code_eval = self.critic.evaluate_task(self, code)
+            # if code_eval['result']=='success':
+            #     break
+            # self.history[task['name']]={code_eval['result']: code}
+            #Can incorporate human feedback here
 
 if __name__ == "__main__":
-    web_voyager = Web_Voyager()
+    initial_task = "Find me some bagels online"
+    web_voyager = Web_Voyager(initial_task=initial_task)
     while web_voyager.iteration < web_voyager.max_iterations and not web_voyager.done:
         web_voyager.step()
         web_voyager.increment_iter()
